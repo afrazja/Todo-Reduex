@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import Main from"./components/main"
 class App extends Component {
   render() {
     return (
-<h1>todo app</h1>
-    );
+      <div>
+        <h1>todo app</h1>
+        <Main/>
+      </div>
+
+    )
   }
 }
 
