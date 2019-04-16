@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Todolist from"./todolist"
 import Addtodo from"./addtodo"
 import TodoSearch from"./todoSearch"
-
+import TodoAPI from"../api/todoAPI"
 
 
 class Main extends React.Component {
@@ -13,10 +13,10 @@ state={
   showCompleted:false,
   searchText:'',
 
-  todos:[
-    {id:uuid(),text:"wewe",completed:false},
-  {id:uuid(),text:"fgfg",completed:true}
-]
+  todos:TodoAPI.getTodos()
+}
+componentDidUpdate=()=>{
+  TodoAPI.setTodos(this.state.todos)
 }
 onToggle=(id)=>{
 var updateTodo=this.state.todos.map((todo)=>{
@@ -44,11 +44,12 @@ addNew=(todoText)=>{
 
 
     render(){
-        var  {todos}=this.state;
+        var  {todos,showCompleted,searchText}=this.state;
+        var filterTodos=TodoAPI.filterTodos(todos,showCompleted,searchText)
         return(
           <div>
               <TodoSearch onSearch={this.onSearch}/>
-  <Todolist todos={todos} onToggle={this.onToggle}/>
+  <Todolist todos={filterTodos} onToggle={this.onToggle}/>
   <Addtodo onAddTodo={this.addNew}/>
 
 </div>
