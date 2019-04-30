@@ -1,15 +1,17 @@
 import Todo from "./todo"
 import Addtodo from "./addtodo"
-
+import {connect} from "react-redux"
+import TodoAPI from"../api/todoAPI"
 var React = require('react');
 var PropTypes = require('prop-types');
 
+
  export class Todolist extends React.Component {
   render() {
-    var {todos,onToggle}=this.props;
+    var {todos,showCompleted,searchText}=this.props;
     var showList=()=>{
-    return todos.map((todo)=>{
-        return(<Todo key={todo.id} id={todo.id} text={todo.text} completed={todo.completed} onToggle={onToggle} />)
+    return TodoAPI.  filterTodos(todos,showCompleted,searchText).map((todo)=>{
+        return(<Todo key={todo.id} {...todo} />)
 
     });
     }
@@ -23,4 +25,11 @@ var PropTypes = require('prop-types');
   }
 
 };
-export default Todolist;
+export default connect((state)=>{
+  return{
+    todos:state.todos,
+    showCompleted:state.showCompleted,
+    searchText:state.searchText,
+  };
+}
+)(Todolist);

@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {connect} from "react-redux"
+
+import {setSearchText,addTodo,toggleShowCompleted,toggleTodo} from "./../actions/actions"
 
 class Addtodo extends React.Component {
-  state={
-    newTodo:""
-  }
 
   handleSubmit=(e)=>{
     e.preventDefault();
+    var {dispatch}=this.props;
+
     var todoText=this.refs.newText.value;
   if(todoText.length>0 ){
   this.refs.newText.value='';
-  this.props.onAddTodo(todoText)
+  dispatch(addTodo(todoText))
   }else{
 this.refs.newText.focus();
   }
@@ -30,4 +32,4 @@ return(
   }
 }
 
-export default Addtodo;
+export default connect()(Addtodo);
